@@ -13,7 +13,7 @@ def fetch_movie_data(movie_id, api_key, base_url='https://api.themoviedb.org/3')
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching movie ID {movie_id}: {e} does not exist.")
+        print(f"Error fetching movie with ID {movie_id}: {e} does not exist.")
         return None
 
 def fetch_all_movies(movie_ids, api_key):

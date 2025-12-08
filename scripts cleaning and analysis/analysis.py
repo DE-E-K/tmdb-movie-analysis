@@ -220,7 +220,10 @@ plt.ylabel('Revenue (M USD) [log scale]')
 plt.title('Revenue vs Budget (log-log) colored by primary genre')
 plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
 plt.tight_layout()
-plt.show()
+plt.savefig("../plots/Revenue_vs_Budget.png", 
+            dpi=300, 
+            bbox_inches='tight')
+# plt.show()
 
 
 # 2) ROI Distribution by Genre (boxplot for top genres)
@@ -235,7 +238,10 @@ plt.xticks(rotation=45)
 plt.ylabel('ROI (revenue/budget)')
 plt.title('ROI distribution for top 10 primary genres')
 plt.tight_layout()
-plt.show()
+plt.savefig("../plots/Roi_distribution.png", 
+            dpi=300, 
+            bbox_inches='tight')
+# plt.show()
 
 # 3) Popularity vs Rating (bubble with vote_count size, color by ROI)
 plt.figure(figsize=(8,6))
@@ -256,7 +262,10 @@ plt.xlabel('Vote Average (Rating)')
 plt.ylabel('Popularity')
 plt.title('Popularity vs Rating (bubble size ~ vote count, color ~ ROI)')
 plt.tight_layout()
-plt.show()
+plt.savefig("../plots/Popularity_vs_lating.png", 
+            dpi=300, 
+            bbox_inches='tight')
+# plt.show()
 
 # 4) Yearly Trends in Box Office Performance
 yearly = df.dropna(subset=['year']).groupby('year').agg(
@@ -274,20 +283,26 @@ plt.ylabel('Revenue (M USD)')
 plt.title('Yearly Box Office Trends')
 plt.legend()
 plt.tight_layout()
-plt.show()
+plt.savefig("../plots/Trends_in_Box_Office_Performance.png", 
+            dpi=300, 
+            bbox_inches='tight')
+# plt.show()
 
 # 5) Comparison of Franchise vs Standalone Success
 df['is_franchise'] = df['belongs_to_collection'].notna()
 
 fig, axes = plt.subplots(1, 2, figsize=(12,5))
-sns.barplot(data=df, x='is_franchise', y='revenue_musd', ax=axes[0])
+sns.barplot(data=df, x='is_franchise', y='revenue_musd', ax=axes[0], errorbar=None)
 axes[0].set_xticklabels(['Standalone', 'Franchise'])
 axes[0].set_title('Revenue: Franchise vs Standalone')
 axes[0].set_ylabel('Revenue (M USD)')
 
-sns.barplot(data=df[df['budget_musd'] > 0], x='is_franchise', y='roi', ax=axes[1])
+sns.barplot(data=df[df['budget_musd'] > 0], x='is_franchise', y='roi', ax=axes[1], errorbar=None)
 axes[1].set_xticklabels(['Standalone', 'Franchise'])
 axes[1].set_title('ROI: Franchise vs Standalone')
 axes[1].set_ylabel('ROI (revenue/budget)')
 plt.tight_layout()
-plt.show()
+plt.savefig("../plots/Franchise_vs_Standalone.png", 
+            dpi=300, 
+            bbox_inches='tight')
+# plt.show()

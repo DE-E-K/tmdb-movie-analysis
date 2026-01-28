@@ -6,7 +6,7 @@ A comprehensive data engineering and analysis pipeline for movie data fetched fr
 
 ### [1. Data Extraction](`models/extraction.py`)
 - **Robust API Handling**: Fetches movie metadata with built-in retry logic for network stability.
-- **Batch Processing**: Handles bulk movie IDs efficiently.
+- **Multiprocessing**: Utilizes `ProcessPoolExecutor` for parallel data fetching, significantly speeding up batch operations.
 
 ### [2. Advanced Data Cleaning](`models/cleaning.py`)
 - **JSON Flattening**: Parses nested JSON fields (Genres, Production Companies, Cast/Crew) into usable formats.
@@ -14,6 +14,7 @@ A comprehensive data engineering and analysis pipeline for movie data fetched fr
 - **Deduplication**: Smart handling of duplicate records and unhashable structures.
 
 ### [3. Financial Analysis](`models/analysis.py`)
+- **Consolidated Reporting**: Generates a single comprehensive [`Report of analysis of key metrics`](`kpi_report.txt`) containing all key metrics.
 - **KPI Calculation**: Computes ROI, Profit, and multi-currency adjustments.
 - **Comparative Analysis**: Franchise vs. Standalone movies.
 - **Director Metrics**: Aggregates performance metrics for top directors.
@@ -35,11 +36,13 @@ DEM02/
 │   ├── raw/                 # Valid raw CSVs from extraction
 │   └── cleaned/             # Production-ready datasets
 ├── models/
-│   ├── extraction.py        # API extraction module
+│   ├── extraction.py        # API extraction module (Multiprocessing)
 │   ├── cleaning.py          # Data cleaning & transformation
 │   ├── analysis.py          # Business logic & KPIs
 │   └── visualization.py     # Plotting engine
 ├── plots/                   # Generated visual reports
+├── kpi_report.txt           # Consolidated analysis report
+├── pipeline.log             # Execution logs
 ├── main.py                  # Pipeline entry point
 ├── .env                     # API Configuration
 └── requirements.txt         # Python dependencies

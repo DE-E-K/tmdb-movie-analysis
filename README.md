@@ -1,95 +1,98 @@
-# TMDB Movie Data Analysis: Documentation
+# TMDB Movie Data Analysis
 
-## Project Overview
+A comprehensive data engineering and analysis pipeline for movie data fetched from the [The Movie Database (TMDB) API](https://www.themoviedb.org/). This project mimics a real-world ETL process: extracting raw data, cleaning complex JSON structures, performing financial analysis, and generating professional visualizations to uncover trends in the film industry.
 
-This project implements a complete movie data analysis workflow using
-Python, Pandas, and the TMDb API. It demonstrates API extraction in `fetchData.py`, data
-cleaning in `cleaning.py/.ipynb`, KPIs, advanced filtering, franchise analysis, and visual
-insights. in `analysis.py/.ipynb`
+## 🚀 Key Features
 
-## Objectives
+### [1. Data Extraction](`models/extraction.py`)
+- **Robust API Handling**: Fetches movie metadata with built-in retry logic for network stability.
+- **Batch Processing**: Handles bulk movie IDs efficiently.
 
--   Extract movie metadata from the [TMDb API](https://www.themoviedb.org/settings/api).
--   Clean and transform the dataset into usable analytical form.
--   Conduct exploratory data analysis (EDA).
--   Compute KPIs such as revenue, profit, ROI, popularity, and ratings.
--   Analyze franchises and directors.
--   Visualize trends and insights using Matplotlib.
+### [2. Advanced Data Cleaning](`models/cleaning.py`)
+- **JSON Flattening**: Parses nested JSON fields (Genres, Production Companies, Cast/Crew) into usable formats.
+- **Schema Standardization**: Converts data types, handles missing values, and ensures consistent schema.
+- **Deduplication**: Smart handling of duplicate records and unhashable structures.
 
-## API Data Extraction
+### [3. Financial Analysis](`models/analysis.py`)
+- **KPI Calculation**: Computes ROI, Profit, and multi-currency adjustments.
+- **Comparative Analysis**: Franchise vs. Standalone movies.
+- **Director Metrics**: Aggregates performance metrics for top directors.
 
-A list of movie IDs is used to fetch metadata via TMDb API. Results are
-stored in Pandas DataFrames and saved to `data/raw/`.
+### [4. Visualization](`models/visualization.py`)
+Generates high-quality charts using **Seaborn** and **Matplotlib**:
+- **Revenue trends**: Budget vs. Revenue correlations.
+- **Genre Insights**: ROI distribution and average returns by genre.
+- **Time Analysis**: Yearly box office evolution.
+- **Audience Metrics**: Popularity vs. Ratings correlations.
 
-## Data Cleaning & Transformation in `cleaning.ipynb`
+---
 
-Key tasks include: 
-- Removing irrelevant columns. 
-- Parsing JSON-likefields (genres, companies, languages, etc.). 
-- Converting budget andrevenue to million USD. 
-- Handling missing values, invalid dates, and placeholders. 
-- Filtering only "Released" movies. 
-- Reordering columnsinto a standardized final schema.
+## 📂 Project Structure
 
-## KPI Analysis in `analysis.ipynb`
-
-KPIs include: 
-- Highest/Lowest Revenue 
-- Highest/Lowest Profit
-- Highest/Lowest ROI 
-- Most Voted Movies 
-- Highest/Lowest Rated Movies 
-- Most Popular Movies
-
-User-defined functions streamline ranking operations.
-
-## Advanced Filtering
-Examples: - Best-rated Sci-Fi Action movies starring Bruce Willis. -
-Movies starring Uma Thurman directed by Quentin Tarantino.
-
-## Franchise & Director Analysis
-
--   Compare standalone vs franchise movies using financial and popularity metrics.
--   Identify top-performing franchises.
--   Rank directors by revenue and ratings.
-
-## Visualizations in `analysis.ipynb`
-
-Charts include: - Budget vs Revenue - ROI distribution by genre -
-Popularity vs Rating - Box office trends by year - Franchise vs
-standalone comparison
-
-## Folder Structure
-
+```text
+DEM02/
+├── data/
+│   ├── raw/                 # Valid raw CSVs from extraction
+│   └── cleaned/             # Production-ready datasets
+├── models/
+│   ├── extraction.py        # API extraction module
+│   ├── cleaning.py          # Data cleaning & transformation
+│   ├── analysis.py          # Business logic & KPIs
+│   └── visualization.py     # Plotting engine
+├── plots/                   # Generated visual reports
+├── main.py                  # Pipeline entry point
+├── .env                     # API Configuration
+└── requirements.txt         # Python dependencies
 ```
-    tmdb-movie-da/
-    ├── data/
-    │   ├── raw/            # raw fetched dat in scv format
-    │   ├── cleaned/        # cleaned, and preprocessedd data
-    ├── models/
-    │   └── getAPI_Data.py  # script helps me to fetch data
-    ├── scripts cleaning and analysis/ 
-    │   ├── cleaning.*      # data preprocessing logic
-    │   ├── analysis.*      # EDA, KPIs, and Insights 
-    │   └── fetchData.py    # Helper extraction script
-    ├── plots/              # keeps the image from analysis
-    ├── requirements.txt    # dependencies used
-    ├── Summary.txt         # Summary of key findings 
-    ├── README.md          
-    └── LICENSE
 
+---
+
+## 🛠️ Setup & Installation
+
+### Prerequisites
+- Python 3.8+
+- TMDB API Key from [TMDB](https://www.themoviedb.org/settings/api
+
+### Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/DE-E-K/tmdb-movie-analysis.git
+    cd DEM02
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Configure API Key**:
+    Create a `.env` file in the root directory:
+    ```env
+    api_key=YOUR_TMDB_API_KEY
+    ```
+
+---
+
+## ⚡ Usage
+
+Run the full pipeline (Extract → Clean → Analyze → Visualize):
+
+```bash
+python main.py
 ```
-## Deliverables
 
--   Full ETL-style workflow using Python.
--   Cleaned dataset ready for analytics.
--   KPI tables and detailed insights.
--   Visual plots for financial and performance analysis.
+### Generated Visualizations (in `plots/`)
+*   **`Revenue_vs_Budget.png`**: Scatter plot showing the correlation between investment and return.
+*   **`ROI_Distribution_by_Genre.png`**: Financial risk/reward profiles for major genres.
+*   **`ROI_by_Genre.png`**: Ranked bar chart of most profitable genres.
+*   **`Revenue_vs_Budget_Yearly.png`**: Comparative bar chart of total industry spend vs. earning per year.
+*   **`Popularity_vs_Rating.png`**: How audience buzz correlates with critical score.
+*   **`Yearly_Box_Office_Trends.png`**: The growth of the movie industry over time.
+*   **`Franchise_vs_Standalone.png`**: Performance comparison of IP-driven content vs. original films.
 
-## Technologies Used
+---
 
--   Python
--   Pandas
--   Matplotlib
--   TMDb API
--   JSON parsing
+## Future Improvements
+- **Database Integration**: Load cleaned data into PostgreSQL/Snowflake.
+- **Orchestration**: Schedule daily updates using Apache Airflow.

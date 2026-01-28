@@ -51,7 +51,7 @@ DEM02/
 
 ### Prerequisites
 - Python 3.8+
-- TMDB API Key from [TMDB](https://www.themoviedb.org/settings/api
+- TMDB API Key from [TMDB](https://www.themoviedb.org/settings/api)
 
 ### Installation
 

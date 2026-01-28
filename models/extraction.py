@@ -2,7 +2,10 @@ import os
 import requests
 import time
 import pandas as pd
-from dotenv import load_dotenv
+import logging
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+logger = logging.getLogger(__name__)
 
 class MovieExtractor:
     def __init__(self, api_key):
@@ -11,6 +14,7 @@ class MovieExtractor:
 
     def fetch_movie_data(self, movie_id):
         """Fetch movie data from TMDb API with retry logic"""
+        logger.debug(f"Fetching movie ID {movie_id}...")
         url = f"{self.base_url}/movie/{movie_id}"
         params = {
             'api_key': self.api_key,
@@ -24,38 +28,57 @@ class MovieExtractor:
                 response.raise_for_status()
                 return response.json()
             except requests.exceptions.RequestException as e:
-                # User requested 5 second retry delay
                 if attempt == 0:
-                    print(f"Error fetching movie {movie_id}: {e}. Retrying in 5 seconds...")
+                    logger.warning(f"Request failed for movie {movie_id}: {e}. Retrying in 5 seconds...")
                     time.sleep(5)
                 else:
-                    print(f"Failed to fetch movie {movie_id} after retry: {e}")
+                    logger.error(f"Permanent failure for movie {movie_id} after retry: {e}")
                     return None
 
-    def fetch_all_movies(self, movie_ids):
-        print(f"Fetching data for {len(movie_ids)} movies...")
+    def fetch_all_movies(self, movie_ids, max_workers=10):
+        logger.info(f"Starting batch fetch for {len(movie_ids)} movies with {max_workers} workers.")
         movie_ids = sorted(movie_ids)
         movies_data = []
+        failed_ids = []
         
-        for movie_id in movie_ids:
-            print(f"Fetching data for movie ID: {movie_id}")
-            movie_data = self.fetch_movie_data(movie_id)
+        # Using ProcessPoolExecutor for Multiprocessing as requested
+        # Note: For strict I/O bound tasks like API requests, Threads are usually preferred,
+        # but ProcessPoolExecutor fulfills the explicit requirement for "multiprocessing".
+        
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            # Map future to movie_id
+            future_to_id = {executor.submit(self.fetch_movie_data, mid): mid for mid in movie_ids}
             
-            if movie_data and 'id' in movie_data:
-                movies_data.append(movie_data)
-            else:
-                print(f"Failed to fetch data for movie with ID: {movie_id}")
+            success_count = 0
+            
+            for future in as_completed(future_to_id):
+                movie_id = future_to_id[future]
+                try:
+                    data = future.result()
+                    if data and 'id' in data:
+                        movies_data.append(data)
+                        success_count += 1
+                    else:
+                        failed_ids.append(movie_id)
+                        logger.warning(f"Failed to fetch valid data for movie ID: {movie_id}")
+                except Exception as exc:
+                    failed_ids.append(movie_id)
+                    logger.error(f"Movie ID {movie_id} generated an exception: {exc}")
+
+        logger.info(f"Batch fetch complete. Successful: {success_count}, Failed: {len(failed_ids)}.")
+        if failed_ids:
+            logger.info(f"List of failed/invalid Movie IDs: {failed_ids}")
         
         return movies_data
 
     def run(self, movie_ids, output_path):
         data = self.fetch_all_movies(movie_ids)
         if not data:
-            print("No data fetched.")
+            logger.error("No data fetched.")
             return None
         
         df = pd.DataFrame(data)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         df.to_csv(output_path, index=False)
-        print(f"Data saved to {output_path}")
+        logger.info(f"Data saved to {output_path}")
         return df

@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DataCleaner:
     def __init__(self):
@@ -72,14 +75,16 @@ class DataCleaner:
 
     def drop_irrelevant_columns(self, df):
         """Step 1: Removal of irrelevant columns."""
-        print("dropping irrelevant columns...")
+        logger.info("Dropping irrelevant columns...")
         irrelevant_cols = ['adult', 'imdb_id', 'original_title', 'video', 'homepage']
+        initial_cols = len(df.columns)
         df = df.drop(columns=[c for c in irrelevant_cols if c in df.columns])
+        logger.debug(f"Dropped {initial_cols - len(df.columns)} columns.")
         return df
 
     def flatten_json_columns(self, df):
         """Step 2: Parse and flatten JSON-like columns."""
-        print("Flattening JSON columns...")
+        logger.info("Flattening JSON columns...")
         # Collection
         df['collection_name'] = self.flatten_column(df, 'belongs_to_collection')
         
@@ -91,12 +96,16 @@ class DataCleaner:
 
     def convert_datatypes(self, df):
         """Step 3: Convert types and handle basic filtering."""
-        print("Converting datatypes and filtering status...")
+        logger.info("Converting datatypes and filtering status...")
         df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
         
         if 'status' in df.columns:
+            initial_rows = len(df)
             df = df[df['status'] == 'Released'].copy()
             df = df.drop(columns=['status'])
+            dropped = initial_rows - len(df)
+            if dropped > 0:
+                logger.info(f"Filtered out {dropped} non-released movies.")
         
         numeric_cols = ['budget', 'id', 'popularity', 'revenue', 'vote_count', 'vote_average', 'runtime']
         for col in numeric_cols:
@@ -110,7 +119,7 @@ class DataCleaner:
 
     def calculate_financials(self, df):
         """Step 4: Calculate derived financial metrics."""
-        print("Calculating financial metrics...")
+        logger.info("Calculating financial metrics...")
         df['budget_musd'] = df['budget'] / 1e6
         df['revenue_musd'] = df['revenue'] / 1e6
         df['profit_musd'] = df['revenue_musd'] - df['budget_musd']
@@ -119,7 +128,7 @@ class DataCleaner:
 
     def process_credits(self, df):
         """Step 5: Extract Cast and Crew information."""
-        print("Processing credits...")
+        logger.info("Processing credits...")
         cast_data = df['credits'].apply(self.parse_credits_cast)
         df['cast'] = cast_data.apply(lambda x: "|".join(x[0]))
         df['cast_size'] = cast_data.apply(lambda x: x[1])
@@ -131,18 +140,22 @@ class DataCleaner:
 
     def handle_missing_and_duplicates(self, df):
         """Step 6: Handle missing text and remove duplicates."""
-        print("Handling missing values and duplicates...")
+        logger.info("Handling missing values and duplicates...")
         for col in ['overview', 'tagline']:
             df[col] = df[col].replace(['No Data', ''], np.nan)
         
         # df = df.drop_duplicates()
+        initial_rows = len(df)
         df = df.dropna(subset=['id', 'title'])
         df = df.dropna(thresh=10)
+        dropped = initial_rows - len(df)
+        if dropped > 0:
+            logger.info(f"Dropped {dropped} rows due to missing critical data.")
         return df
 
     def finalize_schema(self, df):
         """Step 7: Reorder columns to final schema."""
-        print("Finalizing schema...")
+        logger.info("Finalizing schema...")
         target_order = [
             'id', 'title', 'tagline', 'release_date', 'genres', 'belongs_to_collection',
             'original_language', 'budget_musd', 'revenue_musd', 'production_companies',
@@ -160,7 +173,7 @@ class DataCleaner:
 
     def clean(self, df):
         """Orchestrate the full cleaning pipeline."""
-        print("Starting full data cleaning pipeline...")
+        logger.info(f"Starting full data cleaning pipeline on {len(df)} records...")
         df = self.drop_irrelevant_columns(df)
         df = self.flatten_json_columns(df)
         df = self.convert_datatypes(df)
@@ -168,7 +181,7 @@ class DataCleaner:
         df = self.process_credits(df)
         df = self.handle_missing_and_duplicates(df)
         df = self.finalize_schema(df)
-        print("Cleaning complete.")
+        logger.info(f"Cleaning complete. Final dataset has {len(df)} records.")
         return df
 
     def run(self, input_path, output_path):
@@ -176,5 +189,5 @@ class DataCleaner:
         df_cleaned = self.clean(df)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         df_cleaned.to_csv(output_path, index=False)
-        print(f"Cleaned data saved to {output_path}")
+        logger.info(f"Cleaned data saved to {output_path}")
         return df_cleaned

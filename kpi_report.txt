@@ -1,0 +1,101 @@
+--- KPI Analysis ---
+
+Highest Revenue:
+
+    id                        title  revenue_musd  rank
+ 19995                       Avatar   2923.706026     1
+299534            Avengers: Endgame   2799.439100     2
+   597                      Titanic   2264.162353     3
+140607 Star Wars: The Force Awakens   2068.223624     4
+299536       Avengers: Infinity War   2052.415039     5
+
+Highest Budget:
+
+    id                        title  budget_musd  rank
+299534            Avengers: Endgame        356.0     1
+181808     Star Wars: The Last Jedi        300.0     2
+299536       Avengers: Infinity War        300.0     2
+420818                The Lion King        260.0     4
+140607 Star Wars: The Force Awakens        245.0     5
+
+Highest Profit:
+
+    id                        title  profit_musd  rank
+ 19995                       Avatar  2686.706026     1
+299534            Avengers: Endgame  2443.439100     2
+   597                      Titanic  2064.162353     3
+140607 Star Wars: The Force Awakens  1823.223624     4
+299536       Avengers: Infinity War  1752.415039     5
+
+Lowest Profit:
+
+    id                          title  profit_musd  rank
+181808       Star Wars: The Last Jedi  1032.698830     1
+260513                  Incredibles 2  1043.225667     2
+321612           Beauty and the Beast  1106.115964     3
+109445                         Frozen  1124.219009     4
+351286 Jurassic World: Fallen Kingdom  1140.469037     5
+
+Highest ROI (Budget >= 10M):
+
+    id                                        title       roi  rank
+ 19995                                       Avatar 12.336312     1
+   597                                      Titanic 11.320812     2
+135397                               Jurassic World 11.143583     3
+ 12445 Harry Potter and the Deathly Hallows: Part 2 10.732090     4
+330457                                    Frozen II  9.691223     5
+
+Lowest ROI (Budget >= 10M):
+
+    id                    title      roi  rank
+181808 Star Wars: The Last Jedi 4.442329     1
+ 99861  Avengers: Age of Ultron 5.980441     2
+260513            Incredibles 2 6.216128     3
+420818            The Lion King 6.392388     4
+284054            Black Panther 6.749630     5
+
+Most Voted:
+
+    id                  title  vote_count  rank
+ 24428           The Avengers       35444     1
+ 19995                 Avatar       33339     2
+299536 Avengers: Infinity War       31393     3
+299534      Avengers: Endgame       27179     4
+   597                Titanic       26705     5
+
+Highest Rated (Votes >= 10):
+
+    id                                        title  vote_average  rank
+299534                            Avengers: Endgame         8.236     1
+299536                       Avengers: Infinity War         8.234     2
+ 12445 Harry Potter and the Deathly Hallows: Part 2         8.081     3
+ 24428                                 The Avengers         7.922     4
+   597                                      Titanic         7.902     5
+
+
+--- Custom Search Results ---
+
+
+Search 1: Bruce Willis in Science Fiction/Action movies:
+No results found.
+
+
+Search 2: Uma Thurman with Quentin Tarantino:
+No results found.
+
+
+--- Franchise vs Standalone Analysis ---
+              revenue_musd       roi  budget_musd  popularity  vote_average
+is_franchise                                                               
+Standalone     1765.139159  9.617018        180.0   22.440100       7.43500
+Franchise      1682.668411  7.786117        218.0   19.859569       7.38775
+
+
+--- Top 5 Directors by Total Revenue ---
+               movie_count  total_revenue  mean_rating
+director                                              
+James Cameron            2    5187.868379       7.7510
+Joss Whedon              2    2924.219209       7.5960
+Anthony Russo            1    2799.439100       8.2360
+Jennifer Lee             2    2727.902485       7.2425
+J.J. Abrams              1    2068.223624       7.2520

@@ -1,4 +1,8 @@
 import pandas as pd
+import logging
+import os
+
+logger = logging.getLogger(__name__)
 
 class MovieAnalyzer:
     def __init__(self, df):
@@ -13,8 +17,10 @@ class MovieAnalyzer:
         data['rank'] = data[metric].rank(method='min', ascending=ascending).astype('Int64')
         return data[['id', 'title', metric, 'rank']].head(top_n)
 
-    def print_kpis(self):
-        print("\n--- KPI Analysis ---")
+    def generate_report(self, output_path=None, verbose=True):
+        if verbose:
+            logger.info("Computing KPI analysis...")
+        lines = ["--- KPI Analysis ---"]
         
         kpis = [
             ("Highest Revenue", 'revenue_musd', False, None),
@@ -28,8 +34,51 @@ class MovieAnalyzer:
         ]
 
         for title, metric, asc, cond in kpis:
-            print(f"\n{title}:")
-            print(self.get_ranked_movies(metric, ascending=asc, top_n=5, filter_condition=cond))
+            result_df = self.get_ranked_movies(metric, ascending=asc, top_n=5, filter_condition=cond)
+            msg_title = f"\n{title}:"
+            lines.append(msg_title)
+            
+            # Convert dataframe to string for file output
+            df_str = result_df.to_string(index=False)
+            lines.append(f"\n{df_str}")
+
+        # Add Custom Search Results
+        lines.append("\n\n--- Custom Search Results ---")
+        search_results = self.get_custom_search_results()
+        
+        lines.append("\n\nSearch 1: Bruce Willis in Science Fiction/Action movies:")
+        if not search_results['bruce_willis_scifi'].empty:
+            lines.append(search_results['bruce_willis_scifi'][['id', 'title', 'genres', 'vote_average']].to_string(index=False))
+        else:
+            lines.append("No results found.")
+        
+        lines.append("\n\nSearch 2: Uma Thurman with Quentin Tarantino:")
+        if not search_results['uma_thurman_tarantino'].empty:
+            lines.append(search_results['uma_thurman_tarantino'][['id', 'title', 'director', 'runtime']].to_string(index=False))
+        else:
+            lines.append("No results found.")
+
+        # Add Franchise vs Standalone Analysis
+        lines.append("\n\n--- Franchise vs Standalone Analysis ---")
+        franchise_comparison = self.analyze_franchise_vs_standalone()
+        lines.append(franchise_comparison.to_string())
+
+        # Add Top Directors
+        lines.append("\n\n--- Top 5 Directors by Total Revenue ---")
+        top_directors = self.get_top_directors()
+        lines.append(top_directors.to_string())
+
+        if output_path:
+            try:
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(lines))
+                if verbose:
+                    logger.info(f"KPI Report saved to {output_path}")
+            except IOError as e:
+                if verbose:
+                    logger.error(f"Failed to write KPI report to {output_path}: {e}")
+
+        return '\n'.join(lines)
 
     def get_custom_search_results(self):
         """Returns a dictionary of DataFrames for specific search queries."""
@@ -69,8 +118,9 @@ class MovieAnalyzer:
         
         return director_stats.sort_values('total_revenue', ascending=False).head(5)
 
-    def run(self):
-        self.print_kpis()
+    def run(self, report_path=None):
+        logger.info("Starting analysis...")
+        self.generate_report(report_path)
         self.get_custom_search_results()
         self.analyze_franchise_vs_standalone()
         self.get_top_directors()

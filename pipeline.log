@@ -1,0 +1,158 @@
+2026-01-28 18:59:13,172 - __main__ - INFO - 
+=== TMDB Data Pipeline Starting ===
+2026-01-28 18:59:13,172 - __main__ - INFO - --- Step 1: Data Extraction ---
+2026-01-28 18:59:13,173 - models.extraction - INFO - Starting batch fetch for 19 movies with 10 workers.
+2026-01-28 18:59:14,793 - models.extraction - WARNING - Request failed for movie 0: 404 Client Error: Not Found for url: https://api.themoviedb.org/3/movie/0?api_key=abd7ddd463d259672c9b4720124aaaac&append_to_response=credits. Retrying in 5 seconds...
+2026-01-28 18:59:21,302 - models.extraction - ERROR - Permanent failure for movie 0 after retry: 404 Client Error: Not Found for url: https://api.themoviedb.org/3/movie/0?api_key=abd7ddd463d259672c9b4720124aaaac&append_to_response=credits
+2026-01-28 18:59:21,305 - models.extraction - WARNING - Failed to fetch valid data for movie ID: 0
+2026-01-28 18:59:21,306 - models.extraction - INFO - Batch fetch complete. Successful: 18, Failed: 1.
+2026-01-28 18:59:21,307 - models.extraction - INFO - List of failed/invalid Movie IDs: [0]
+2026-01-28 18:59:21,384 - models.extraction - INFO - Data saved to D:\AmaliTech\Moodle labs\DEM02\data\raw\movies_data.csv
+2026-01-28 18:59:21,387 - __main__ - INFO - 
+--- Step 2: Data Cleaning ---
+2026-01-28 18:59:21,442 - models.cleaning - INFO - Starting full data cleaning pipeline on 18 records...
+2026-01-28 18:59:21,443 - models.cleaning - INFO - Dropping irrelevant columns...
+2026-01-28 18:59:21,445 - models.cleaning - INFO - Flattening JSON columns...
+2026-01-28 18:59:21,450 - models.cleaning - INFO - Converting datatypes and filtering status...
+2026-01-28 18:59:21,458 - models.cleaning - INFO - Calculating financial metrics...
+2026-01-28 18:59:21,460 - models.cleaning - INFO - Processing credits...
+2026-01-28 18:59:22,087 - models.cleaning - INFO - Handling missing values and duplicates...
+2026-01-28 18:59:22,090 - models.cleaning - INFO - Finalizing schema...
+2026-01-28 18:59:22,091 - models.cleaning - INFO - Cleaning complete. Final dataset has 18 records.
+2026-01-28 18:59:22,094 - models.cleaning - INFO - Cleaned data saved to D:\AmaliTech\Moodle labs\DEM02\data\cleaned\movies_data_cleaned.csv
+2026-01-28 18:59:22,095 - __main__ - INFO - 
+--- Step 3: Analysis ---
+2026-01-28 18:59:22,095 - models.analysis - INFO - Starting analysis...
+2026-01-28 18:59:22,095 - models.analysis - INFO - Computing KPI analysis...
+2026-01-28 18:59:22,150 - models.analysis - INFO - KPI Report saved to D:\AmaliTech\Moodle labs\DEM02\kpi_report.txt
+2026-01-28 18:59:22,158 - __main__ - INFO - 
+--- Step 4: Visualization ---
+2026-01-28 18:59:22,160 - models.visualization - INFO - 
+--- Generating Visualizations ---
+2026-01-28 18:59:22,609 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget.png
+2026-01-28 18:59:22,886 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_Distribution_by_Genre.png
+2026-01-28 18:59:23,088 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Popularity_vs_Rating.png
+2026-01-28 18:59:23,343 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Yearly_Box_Office_Trends.png
+2026-01-28 18:59:23,573 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Franchise_vs_Standalone.png
+2026-01-28 18:59:23,941 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_by_Genre.png
+2026-01-28 18:59:24,024 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-01-28 18:59:24,027 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-01-28 18:59:24,376 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget_Yearly.png
+2026-01-28 18:59:24,377 - __main__ - INFO - 
+=== Pipeline Complete ===
+2026-01-28 19:10:22,965 - __main__ - INFO - 
+=== TMDB Data Pipeline Starting ===
+2026-01-28 19:10:22,965 - __main__ - INFO - --- Step 1: Data Extraction ---
+2026-01-28 19:10:22,966 - models.extraction - INFO - Starting batch fetch for 19 movies with 10 workers.
+2026-01-28 19:10:25,040 - models.extraction - WARNING - Request failed for movie 0: 404 Client Error: Not Found for url: https://api.themoviedb.org/3/movie/0?api_key=abd7ddd463d259672c9b4720124aaaac&append_to_response=credits. Retrying in 5 seconds...
+2026-01-28 19:10:30,985 - models.extraction - ERROR - Permanent failure for movie 0 after retry: 404 Client Error: Not Found for url: https://api.themoviedb.org/3/movie/0?api_key=abd7ddd463d259672c9b4720124aaaac&append_to_response=credits
+2026-01-28 19:10:30,987 - models.extraction - WARNING - Failed to fetch valid data for movie ID: 0
+2026-01-28 19:10:30,989 - models.extraction - INFO - Batch fetch complete. Successful: 18, Failed: 1.
+2026-01-28 19:10:30,989 - models.extraction - INFO - List of failed/invalid Movie IDs: [0]
+2026-01-28 19:10:31,075 - models.extraction - INFO - Data saved to D:\AmaliTech\Moodle labs\DEM02\data\raw\movies_data.csv
+2026-01-28 19:10:31,079 - __main__ - INFO - 
+--- Step 2: Data Cleaning ---
+2026-01-28 19:10:31,144 - models.cleaning - INFO - Starting full data cleaning pipeline on 18 records...
+2026-01-28 19:10:31,144 - models.cleaning - INFO - Dropping irrelevant columns...
+2026-01-28 19:10:31,148 - models.cleaning - INFO - Flattening JSON columns...
+2026-01-28 19:10:31,156 - models.cleaning - INFO - Converting datatypes and filtering status...
+2026-01-28 19:10:31,165 - models.cleaning - INFO - Calculating financial metrics...
+2026-01-28 19:10:31,167 - models.cleaning - INFO - Processing credits...
+2026-01-28 19:10:31,773 - models.cleaning - INFO - Handling missing values and duplicates...
+2026-01-28 19:10:31,777 - models.cleaning - INFO - Finalizing schema...
+2026-01-28 19:10:31,778 - models.cleaning - INFO - Cleaning complete. Final dataset has 18 records.
+2026-01-28 19:10:31,781 - models.cleaning - INFO - Cleaned data saved to D:\AmaliTech\Moodle labs\DEM02\data\cleaned\movies_data_cleaned.csv
+2026-01-28 19:10:31,782 - __main__ - INFO - 
+--- Step 3: Analysis ---
+2026-01-28 19:10:31,782 - models.analysis - INFO - Starting analysis...
+2026-01-28 19:10:31,782 - models.analysis - INFO - Computing KPI analysis...
+2026-01-28 19:10:31,876 - models.analysis - INFO - KPI Report saved to D:\AmaliTech\Moodle labs\DEM02\kpi_report.txt
+2026-01-28 19:10:31,882 - __main__ - INFO - 
+--- Step 4: Visualization ---
+2026-01-28 19:10:31,884 - models.visualization - INFO - 
+--- Generating Visualizations ---
+2026-01-28 19:10:32,309 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget.png
+2026-01-28 19:10:32,557 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_Distribution_by_Genre.png
+2026-01-28 19:10:32,765 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Popularity_vs_Rating.png
+2026-01-28 19:10:33,006 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Yearly_Box_Office_Trends.png
+2026-01-28 19:10:33,205 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Franchise_vs_Standalone.png
+2026-01-28 19:10:33,519 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_by_Genre.png
+2026-01-28 19:10:33,875 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget_Yearly.png
+2026-01-28 19:10:33,876 - __main__ - INFO - 
+=== Pipeline Complete ===
+2026-01-28 19:31:49,227 - __main__ - INFO - 
+=== TMDB Data Pipeline Starting ===
+2026-01-28 19:31:49,227 - __main__ - INFO - --- Step 1: Data Extraction ---
+2026-01-28 19:31:49,227 - models.extraction - INFO - Starting batch fetch for 19 movies with 10 workers.
+2026-01-28 19:32:01,619 - models.extraction - WARNING - Failed to fetch valid data for movie ID: 0
+2026-01-28 19:32:02,523 - models.extraction - INFO - Batch fetch complete. Successful: 18, Failed: 1.
+2026-01-28 19:32:02,523 - models.extraction - INFO - List of failed/invalid Movie IDs: [0]
+2026-01-28 19:32:02,608 - models.extraction - INFO - Data saved to D:\AmaliTech\Moodle labs\DEM02\data\raw\movies_data.csv
+2026-01-28 19:32:02,611 - __main__ - INFO - 
+--- Step 2: Data Cleaning ---
+2026-01-28 19:32:02,688 - models.cleaning - INFO - Starting full data cleaning pipeline on 18 records...
+2026-01-28 19:32:02,688 - models.cleaning - INFO - Dropping irrelevant columns...
+2026-01-28 19:32:02,693 - models.cleaning - INFO - Flattening JSON columns...
+2026-01-28 19:32:02,700 - models.cleaning - INFO - Converting datatypes and filtering status...
+2026-01-28 19:32:02,713 - models.cleaning - INFO - Calculating financial metrics...
+2026-01-28 19:32:02,715 - models.cleaning - INFO - Processing credits...
+2026-01-28 19:32:03,378 - models.cleaning - INFO - Handling missing values and duplicates...
+2026-01-28 19:32:03,381 - models.cleaning - INFO - Finalizing schema...
+2026-01-28 19:32:03,382 - models.cleaning - INFO - Cleaning complete. Final dataset has 18 records.
+2026-01-28 19:32:03,384 - models.cleaning - INFO - Cleaned data saved to D:\AmaliTech\Moodle labs\DEM02\data\cleaned\movies_data_cleaned.csv
+2026-01-28 19:32:03,385 - __main__ - INFO - 
+--- Step 3: Analysis ---
+2026-01-28 19:32:03,385 - models.analysis - INFO - Starting analysis...
+2026-01-28 19:32:03,386 - models.analysis - INFO - Computing KPI analysis...
+2026-01-28 19:32:03,439 - models.analysis - INFO - KPI Report saved to D:\AmaliTech\Moodle labs\DEM02\kpi_report.txt
+2026-01-28 19:32:03,439 - __main__ - INFO - 
+--- Step 4: Visualization ---
+2026-01-28 19:32:03,442 - models.visualization - INFO - 
+--- Generating Visualizations ---
+2026-01-28 19:32:03,845 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget.png
+2026-01-28 19:32:04,079 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_Distribution_by_Genre.png
+2026-01-28 19:32:04,305 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Popularity_vs_Rating.png
+2026-01-28 19:32:04,586 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Yearly_Box_Office_Trends.png
+2026-01-28 19:32:04,780 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Franchise_vs_Standalone.png
+2026-01-28 19:32:05,121 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_by_Genre.png
+2026-01-28 19:32:05,465 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget_Yearly.png
+2026-01-28 19:32:05,465 - __main__ - INFO - 
+=== Pipeline Complete ===
+2026-01-28 19:33:07,517 - __main__ - INFO - 
+=== TMDB Data Pipeline Starting ===
+2026-01-28 19:33:07,518 - __main__ - INFO - --- Step 1: Data Extraction ---
+2026-01-28 19:33:07,518 - models.extraction - INFO - Starting batch fetch for 19 movies with 10 workers.
+2026-01-28 19:33:18,377 - models.extraction - WARNING - Failed to fetch valid data for movie ID: 0
+2026-01-28 19:33:19,362 - models.extraction - INFO - Batch fetch complete. Successful: 18, Failed: 1.
+2026-01-28 19:33:19,362 - models.extraction - INFO - List of failed/invalid Movie IDs: [0]
+2026-01-28 19:33:19,414 - models.extraction - INFO - Data saved to D:\AmaliTech\Moodle labs\DEM02\data\raw\movies_data.csv
+2026-01-28 19:33:19,421 - __main__ - INFO - 
+--- Step 2: Data Cleaning ---
+2026-01-28 19:33:19,475 - models.cleaning - INFO - Starting full data cleaning pipeline on 18 records...
+2026-01-28 19:33:19,475 - models.cleaning - INFO - Dropping irrelevant columns...
+2026-01-28 19:33:19,476 - models.cleaning - INFO - Flattening JSON columns...
+2026-01-28 19:33:19,481 - models.cleaning - INFO - Converting datatypes and filtering status...
+2026-01-28 19:33:19,487 - models.cleaning - INFO - Calculating financial metrics...
+2026-01-28 19:33:19,488 - models.cleaning - INFO - Processing credits...
+2026-01-28 19:33:20,264 - models.cleaning - INFO - Handling missing values and duplicates...
+2026-01-28 19:33:20,266 - models.cleaning - INFO - Finalizing schema...
+2026-01-28 19:33:20,267 - models.cleaning - INFO - Cleaning complete. Final dataset has 18 records.
+2026-01-28 19:33:20,269 - models.cleaning - INFO - Cleaned data saved to D:\AmaliTech\Moodle labs\DEM02\data\cleaned\movies_data_cleaned.csv
+2026-01-28 19:33:20,269 - __main__ - INFO - 
+--- Step 3: Analysis ---
+2026-01-28 19:33:20,270 - models.analysis - INFO - Starting analysis...
+2026-01-28 19:33:20,270 - models.analysis - INFO - Computing KPI analysis...
+2026-01-28 19:33:20,296 - models.analysis - INFO - KPI Report saved to D:\AmaliTech\Moodle labs\DEM02\kpi_report.txt
+2026-01-28 19:33:20,297 - __main__ - INFO - 
+--- Step 4: Visualization ---
+2026-01-28 19:33:20,298 - models.visualization - INFO - 
+--- Generating Visualizations ---
+2026-01-28 19:33:20,671 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget.png
+2026-01-28 19:33:20,909 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_Distribution_by_Genre.png
+2026-01-28 19:33:21,142 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Popularity_vs_Rating.png
+2026-01-28 19:33:21,397 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Yearly_Box_Office_Trends.png
+2026-01-28 19:33:21,661 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Franchise_vs_Standalone.png
+2026-01-28 19:33:22,305 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\ROI_by_Genre.png
+2026-01-28 19:33:22,744 - models.visualization - INFO - Saved plot: D:\AmaliTech\Moodle labs\DEM02\plots\Revenue_vs_Budget_Yearly.png
+2026-01-28 19:33:22,744 - __main__ - INFO - 
+=== Pipeline Complete ===

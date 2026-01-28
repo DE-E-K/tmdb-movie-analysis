@@ -2,6 +2,11 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+# Suppress matplotlib category info logs when plotting numeric-like strings
+logging.getLogger('matplotlib.category').setLevel(logging.WARNING)
 
 class DataVisualizer:
     def __init__(self, df, output_dir):
@@ -17,7 +22,7 @@ class DataVisualizer:
         path = os.path.join(self.output_dir, filename)
         plt.savefig(path, dpi=300, bbox_inches='tight')
         plt.close()
-        print(f"Saved plot: {path}")
+        logger.info(f"Saved plot: {path}")
         return path
 
     def plot_revenue_vs_budget(self):
@@ -99,6 +104,9 @@ class DataVisualizer:
         pdf_rev_bud = self.df.groupby('year')[['revenue_musd', 'budget_musd']].sum().rename(
             columns={'revenue_musd': 'Total Revenue', 'budget_musd': 'Total Budget'}).reset_index()
 
+        # Ensure year is integer for cleaner plotting
+        pdf_rev_bud['year'] = pdf_rev_bud['year'].astype(int)
+
         pdf_melted = pdf_rev_bud.melt(id_vars='year', value_vars=['Total Revenue', 'Total Budget'], 
                                                      var_name='Type', value_name='Amount')
                 
@@ -119,7 +127,7 @@ class DataVisualizer:
         return self.save_plot("Revenue_vs_Budget_Yearly.png")
 
     def run(self):
-        print("\n--- Generating Visualizations ---")
+        logger.info("\n--- Generating Visualizations ---")
         self.plot_revenue_vs_budget()
         self.plot_roi_distribution()
         self.plot_popularity_vs_rating()
